@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+# Uruchamianie na push i pull_request
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. clone repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. install Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # 3. install dependencies
+      - name: Install dependencies
+        run: yarn install
+
+      # 4. lint code
+      - name: Lint code
+        run: yarn lint
+
+      # 5. build application
+      - name: Build application
+        run: yarn build
+
+      # 6. tests
+    #   - name: Run tests
+    #     run: yarn test
